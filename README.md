@@ -31,3 +31,9 @@ Name = Aditya Koranga
 University Roll Number = 2518149
 
 Student ID = 25101281241
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+
+## DAY 1
+Member 1 : Implementation of basic OOPS Classes which will act as base for the project.
