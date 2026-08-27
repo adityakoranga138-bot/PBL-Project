@@ -6,7 +6,7 @@ class Patient {
   private:
       int id;
       string name;
-      int bedType;       // 1 = General Ward (800 rupees), 2 = ICU (15,000 rupees)
+      int bedType;      
       int ambulanceFare;
   
   public:
@@ -61,8 +61,40 @@ class Medicine {
         return price;
       }
 };
+const int NUM_LOCATIONS = 4;
+const int INF = 9999;
+
+class CityMap {
+  private:
+      int roadMatrix[NUM_LOCATIONS][NUM_LOCATIONS];
+      string locationNames[NUM_LOCATIONS];
+
+  public:
+      CityMap() {
+          locationNames[0] = "Accident Spot A";
+          locationNames[1] = "Junction B";
+          locationNames[2] = "City Center C";
+          locationNames[3] = "Central Hospital";
+          int defaultRoads[NUM_LOCATIONS][NUM_LOCATIONS] = {
+              { 0,   6, INF,  14 },
+              { 6,   0,   5,   8 },
+              { INF, 5,   0,   3 },
+              { 14,  8,   3,   0 }
+          };
+
+          for (int i = 0; i < NUM_LOCATIONS; i++) {
+              for (int j = 0; j < NUM_LOCATIONS; j++) {
+                  roadMatrix[i][j] = defaultRoads[i][j];
+              }
+          }
+      }
+
+      string getLocationName(int index) {
+          return locationNames[index];
+      }
+};
 
 int main() {
-    cout << "SmartCare System : OOP Base Initialized.\n";
+    cout << "SmartCare System : OOP Base & CityMap Initialized.\n";
     return 0;
 }
