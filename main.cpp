@@ -1,14 +1,12 @@
 #include <iostream>
 #include <string>
 using namespace std;
-
 class Patient {
   private:
       int id;
       string name;
-      int bedType;      
-      int ambulanceFare;
-  
+      int bedType;       
+      int ambulanceFare;  
   public:
       Patient() {
           id = 0;
@@ -16,7 +14,6 @@ class Patient {
           bedType = 0;
           ambulanceFare = 0;
       }
-      
       Patient(int pId, string pName, int bType, int fare) {
           id = pId;
           name = pName;
@@ -63,12 +60,10 @@ class Medicine {
 };
 const int NUM_LOCATIONS = 4;
 const int INF = 9999;
-
 class CityMap {
   private:
       int roadMatrix[NUM_LOCATIONS][NUM_LOCATIONS];
       string locationNames[NUM_LOCATIONS];
-
   public:
       CityMap() {
           locationNames[0] = "Accident Spot A";
@@ -81,7 +76,6 @@ class CityMap {
               { INF, 5,   0,   3 },
               { 14,  8,   3,   0 }
           };
-
           for (int i = 0; i < NUM_LOCATIONS; i++) {
               for (int j = 0; j < NUM_LOCATIONS; j++) {
                   roadMatrix[i][j] = defaultRoads[i][j];
@@ -92,9 +86,22 @@ class CityMap {
       string getLocationName(int index) {
           return locationNames[index];
       }
+      int findFastestRoute(int startNode, int destNode) {
+          int minTime = roadMatrix[startNode][destNode];
+          for (int k = 0; k < NUM_LOCATIONS; k++) {
+              if (roadMatrix[startNode][k] != INF && roadMatrix[k][destNode] != INF) {
+                  int transitViaK = roadMatrix[startNode][k] + roadMatrix[k][destNode];
+                  if (transitViaK < minTime) {
+                      minTime = transitViaK;
+                  }
+              }
+          }
+          return minTime;
+      }
 };
-
 int main() {
-    cout << "SmartCare System : OOP Base & CityMap Initialized.\n";
+    CityMap map;
+    cout << "SmartCare System : OOP Base & CityMap Routing Initialized.\n";
+    cout << "Fastest Transit (Spot A -> Central Hospital): " << map.findFastestRoute(0, 3) << " mins\n";
     return 0;
 }
