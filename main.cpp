@@ -129,3 +129,20 @@ cout << endl<<"============================================"<<endl;
                << (bedType == 1 ? "General Ward" : "ICU") << ")"<<endl;
           cout << "============================================"<<endl;
       }
+void displayBeds() {
+          cout << endl <<"--------------------------------------------"<< endl;
+          cout << "  HOSPITAL WARD OCCUPANCY (" << admittedPatients.size() << "/" << MAX_BEDS << ")"<<endl;
+          cout << "--------------------------------------------"<<endl;
+          if (admittedPatients.empty()) {
+              cout << "All beds are currently vacant."<<endl;
+              return;
+          }
+          for (size_t i = 0; i < admittedPatients.size(); i++) {
+              cout << "Bed " << (i + 1) << " | ID: " << admittedPatients[i].getId()
+                   << " | Name: " << admittedPatients[i].getName()
+                   << " | Type: " << (admittedPatients[i].getBedType() == 1 ? "General Ward ( /day)" : "ICU ( /day)")
+                   << " | Inbound Fare: Rs. " << admittedPatients[i].getAmbulanceFare() << endl;
+          }
+          cout << "--------------------------------------------"<<endl;
+      }
+};
