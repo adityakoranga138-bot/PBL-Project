@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include<vector>
 using namespace std;
 class Patient {
   private:
@@ -99,9 +100,22 @@ class CityMap {
           return minTime;
       }
 };
-int main() {
-    CityMap map;
-    cout << "SmartCare System : OOP Base & CityMap Routing Initialized.\n";
-    cout << "Fastest Transit (Spot A -> Central Hospital): " << map.findFastestRoute(0, 3) << " mins\n";
-    return 0;
-}
+const int MAX_BEDS = 4;
+
+class HospitalSystem {
+  private:
+      vector<Patient> admittedPatients;
+      CityMap cityMap;
+
+  public:
+      void admitPatient(int pickupLoc, int id, string name, int bedType) {
+          if (admittedPatients.size() >= MAX_BEDS) {
+              cout << "\n[ALERT] All " << MAX_BEDS << " beds occupied! Triage diversion required.\n";
+              return;
+          }
+
+          // Node 3 is always Central Hospital
+          int travelTime = cityMap.findFastestRoute(pickupLoc, 3);
+          int fare = travelTime * 50; // Standard rate: Rs. 50 per transit minute
+
+          admittedPatients.push_back(Patient(id, name, bedType, fare));
