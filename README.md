@@ -12,25 +12,25 @@ University Roll Number = 2518253
 Student ID = 25101280233
 
 ## Team member 2
+Name = Aditya Koranga
+
+University Roll Number = 2518149
+
+Student ID = 25101281241
+
+## Team member 3
 Name = Ashish Singh Negi
 
 University Roll Number = 2518248
 
 Student ID = 25101280414
 
-## Team member 3
+## Team member 4
 Name = Aryan Singh
 
 University Roll Number = 2518241
 
 Student ID = 25101286805
-
-## Team member 4
-Name = Aditya Koranga
-
-University Roll Number = 2518149
-
-Student ID = 25101281241
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
