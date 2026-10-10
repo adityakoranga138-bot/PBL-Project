@@ -110,12 +110,10 @@ class HospitalSystem {
   public:
       void admitPatient(int pickupLoc, int id, string name, int bedType) {
           if (admittedPatients.size() >= MAX_BEDS) {
-              cout << "\n[ALERT] All " << MAX_BEDS << " beds occupied! Triage diversion required.\n";
+              cout <<endl<< "[ALERT] All " << MAX_BEDS << " beds occupied! Triage diversion required."<<endl;
               return;
           }
-
-          // Node 3 is always Central Hospital
           int travelTime = cityMap.findFastestRoute(pickupLoc, 3);
-          int fare = travelTime * 50; // Standard rate: Rs. 50 per transit minute
+          int fare = travelTime * 50; 
 
           admittedPatients.push_back(Patient(id, name, bedType, fare));
