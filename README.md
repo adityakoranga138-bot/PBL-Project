@@ -49,3 +49,8 @@ Member 1, 4 : Initialised city map and 2d matrix to store locations of the place
 Member 1, 4 : Initialised simple fastest transit route comparison.
 
 -------------------------------------------------------------------------------------
+
+## DAY 8
+Member 1, 2 : Included vector library and dynamic patients information.
+
+-------------------------------------------------------------------------------------
