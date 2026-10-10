@@ -117,3 +117,15 @@ class HospitalSystem {
           int fare = travelTime * 50; 
 
           admittedPatients.push_back(Patient(id, name, bedType, fare));
+cout << endl<<"============================================"<<endl;
+          cout << "  PATIENT ADMITTED SUCCESSFULLY"<<endl;
+          cout << "============================================"<<endl;
+          cout << "Name : " << name << endl;
+          cout << "Patient ID : " << id << endl;
+          cout << "Pickup Point : " << cityMap.getLocationName(pickupLoc) << endl;
+          cout << "Estimated Transit : " << travelTime << " minutes"<<endl;
+          cout << "Ambulance Fare : Rs. " << fare << endl;
+          cout << "Allocated Bed : Bed " << admittedPatients.size() << " (" 
+               << (bedType == 1 ? "General Ward" : "ICU") << ")"<<endl;
+          cout << "============================================"<<endl;
+      }
