@@ -54,3 +54,8 @@ Member 1, 4 : Initialised simple fastest transit route comparison.
 Member 1, 2 : Included vector library and dynamic patients information.
 
 -------------------------------------------------------------------------------------
+
+## DAY 9,10
+Member 2: Implemented patient admission confirmation and hospital bed occupancy display.
+
+-------------------------------------------------------------------------------------
