@@ -146,3 +146,16 @@ void displayBeds() {
           cout << "--------------------------------------------"<<endl;
       }
 };
+int main() {
+    HospitalSystem hospital;
+    CityMap map;
+    int choice = 0;
+
+    while (choice != 4) {
+        cout << "\n========== SMARTCARE EMERGENCY SYSTEM =========="<<endl;
+        cout << "1. View City Locations & Transit Test"<<endl;
+        cout << "2. Dispatch Ambulance & Admit Emergency Patient"<<endl;
+        cout << "3. View Ward Bed Status"<<endl;
+        cout << "4. Exit System"<<endl;
+        cout << "Enter your choice (1-4): ";
+        cin >> choice;
