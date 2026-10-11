@@ -159,3 +159,69 @@ int main() {
         cout << "4. Exit System"<<endl;
         cout << "Enter your choice (1-4): ";
         cin >> choice;
+
+switch (choice) {
+            case 1: {
+                cout << "\n[CITY NODES]\n";
+                for (int i = 0; i < NUM_LOCATIONS; i++) {
+                    cout << i << ". " << map.getLocationName(i) << endl;
+                }
+                int fromNode;
+                cout << endl <<"Enter pickup node (0-2) to test transit to Central Hospital (3): ";
+                cin >> fromNode;
+                if (fromNode >= 0 && fromNode < 3) {
+                    int time = map.findFastestRoute(fromNode, 3);
+                    cout << "Optimal route time to Central Hospital: " << time << " mins."<< endl;
+                } else {
+                    cout << "Invalid pickup location node."<< endl;
+                }
+                break;
+            }
+            case 2: {
+                int pId, bedType, pickupLoc;
+                string pName;
+
+                cout << "\n--- EMERGENCY ADMISSION PORTAL ---\n";
+                cout << "Select Pickup Location:\n";
+                cout << "  0. Accident Spot A\n";
+                cout << "  1. Junction B\n";
+                cout << "  2. City Center C\n";
+                cout << "Enter Location Index (0-2): ";
+                cin >> pickupLoc;
+
+                if (pickupLoc < 0 || pickupLoc > 2) {
+                    cout << "[ERROR] Invalid pickup location."<< endl;
+                    break;
+                }
+
+                cout << "Enter Patient ID: ";
+                cin >> pId;
+                cout << "Enter Patient Name: ";
+                cin >> pName;
+                cout << "Select Ward Type (1 = General Ward, 2 = ICU): ";
+                cin >> bedType;
+
+                if (bedType != 1 && bedType != 2) {
+                    cout << "[ERROR] Invalid ward choice. Defaulting to General Ward (1)."<< endl;
+                    bedType = 1;
+                }
+
+                hospital.admitPatient(pickupLoc, pId, pName, bedType);
+                break;
+            }
+            case 3:
+                hospital.displayBeds();
+                break;
+
+            case 4:
+                cout << endl << "Exiting SmartCare System. Prototype active." << endl;
+                break;
+
+            default:
+                cout << endl <<"Invalid choice. Please choose between 1 and 4."<< endl;
+                break;
+        }
+    }
+
+    return 0;
+}
