@@ -5,55 +5,60 @@
 using namespace std;
 
 class Patient {
-  private:
-      int id;
-      string name;
-      int priority;
-      int bedType;
-      int ambulanceFare;
-      int pickupLocation;
+private:
+    int id;
+    string name;
+    int priority;
+    int bedType;
+    int ambulanceFare;
+    int pickupLocation;
 
-  public:
-      Patient() {
-          id = 0;
-          name = "EMPTY";
-          priority = 2;
-          bedType = 0;
-          ambulanceFare = 0;
-          pickupLocation = 0;
-      }
+public:
+    Patient() {
+        id = 0;
+        name = "EMPTY";
+        priority = 2;
+        bedType = 0;
+        ambulanceFare = 0;
+        pickupLocation = 0;
+    }
 
-      Patient(int pId, string pName, int pPriority, int bType, int fare, int pLoc = 0) {
-          id = pId;
-          name = pName;
-          priority = pPriority;
-          bedType = bType;
-          ambulanceFare = fare;
-          pickupLocation = pLoc;
-      }
+    Patient(int pId, string pName, int pPriority, int bType, int fare, int pLoc = 0) {
+        id = pId;
+        name = pName;
+        priority = pPriority;
+        bedType = bType;
+        ambulanceFare = fare;
+        pickupLocation = pLoc;
+    }
 
-      int getId() { 
-        return id; 
-      }
-      string getName() { 
-        return name; 
-      }
-      int getPriority() { 
-        return priority; 
-      }
-      int getBedType() { 
-        return bedType; 
-      }
-      int getAmbulanceFare() { 
-        return ambulanceFare; 
-      }
-      int getPickupLocation() { 
-        return pickupLocation; 
-      }
+    int getId() {
+        return id;
+    }
 
-      void setAmbulanceFare(int fare) { 
-        ambulanceFare = fare; 
-      }
+    string getName() {
+        return name;
+    }
+
+    int getPriority() {
+        return priority;
+    }
+
+    int getBedType() {
+        return bedType;
+    }
+
+    int getAmbulanceFare() {
+        return ambulanceFare;
+    }
+
+    int getPickupLocation() {
+        return pickupLocation;
+    }
+
+    void setAmbulanceFare(int fare) {
+        ambulanceFare = fare;
+    }
 };
 
 struct CompareTriagePriority {
@@ -63,305 +68,310 @@ struct CompareTriagePriority {
 };
 
 class Medicine {
-  private:
-      string name;
-      int stock;
-      float price;
+private:
+    string name;
+    int stock;
+    float price;
 
-  public:
-      Medicine() {
-          name = "";
-          stock = 0;
-          price = 0.0;
-      }
+public:
+    Medicine() {
+        name = "";
+        stock = 0;
+        price = 0.0;
+    }
 
-      Medicine(string mName, int mStock, float mPrice) {
-          name = mName;
-          stock = mStock;
-          price = mPrice;
-      }
+    Medicine(string mName, int mStock, float mPrice) {
+        name = mName;
+        stock = mStock;
+        price = mPrice;
+    }
 
-      string getName() { 
-        return name; 
-      }
-      int getStock() { 
-        return stock; 
-      }
-      float getPrice() { 
-        return price; 
-      }
+    string getName() {
+        return name;
+    }
 
-      bool dispense(int qty) {
-          if (stock >= qty) {
-              stock -= qty;
-              return true;
-          }
-          return false;
-      }
+    int getStock() {
+        return stock;
+    }
+
+    float getPrice() {
+        return price;
+    }
+
+    bool dispense(int qty) {
+        if (stock >= qty) {
+            stock -= qty;
+            return true;
+        }
+        return false;
+    }
 };
 
 int NUM_LOCATIONS = 4;
 int INF = 9999;
 
 class CityMap {
-  private:
-      int roadMatrix[4][4];
-      string locationNames[4];
+private:
+    int roadMatrix[4][4];
+    string locationNames[4];
 
-  public:
-      CityMap() {
-          locationNames[0] = "Accident Spot A";
-          locationNames[1] = "Junction B";
-          locationNames[2] = "City Center C";
-          locationNames[3] = "Central Hospital";
+public:
+    CityMap() {
+        locationNames[0] = "Accident Spot A";
+        locationNames[1] = "Junction B";
+        locationNames[2] = "City Center C";
+        locationNames[3] = "Central Hospital";
 
-          int defaultRoads[4][4] = {
-              { 0,   6, INF,  14 },
-              { 6,   0,   5,   8 },
-              { INF, 5,   0,   3 },
-              { 14,  8,   3,   0 }
-          };
+        int defaultRoads[4][4] = {
+            {0, 6, INF, 14},
+            {6, 0, 5, 8},
+            {INF, 5, 0, 3},
+            {14, 8, 3, 0}
+        };
 
-          for (int i = 0; i < NUM_LOCATIONS; i++) {
-              for (int j = 0; j < NUM_LOCATIONS; j++) {
-                  roadMatrix[i][j] = defaultRoads[i][j];
-              }
-          }
-      }
+        for (int i = 0; i < NUM_LOCATIONS; i++) {
+            for (int j = 0; j < NUM_LOCATIONS; j++) {
+                roadMatrix[i][j] = defaultRoads[i][j];
+            }
+        }
+    }
 
-      string getLocationName(int index) {
-          if (index >= 0 && index < NUM_LOCATIONS) {
-              return locationNames[index];
-          }
-          return "Unknown Location";
-      }
+    string getLocationName(int index) {
+        if (index >= 0 && index < NUM_LOCATIONS) {
+            return locationNames[index];
+        }
+        return "Unknown Location";
+    }
 
-      int findFastestRoute(int startNode, int destNode, bool printPath = false) {
-          int d[4];
-          bool visited[4];
-          int parent[4];
+    int findFastestRoute(int startNode, int destNode, bool printPath = false) {
+        int d[4];
+        bool visited[4];
+        int parent[4];
 
-          for (int i = 0; i < NUM_LOCATIONS; i++) {
-              d[i] = INF;
-              visited[i] = false;
-              parent[i] = -1;
-          }
+        for (int i = 0; i < NUM_LOCATIONS; i++) {
+            d[i] = INF;
+            visited[i] = false;
+            parent[i] = -1;
+        }
 
-          d[startNode] = 0;
+        d[startNode] = 0;
 
-          for (int count = 0; count < NUM_LOCATIONS - 1; count++) {
-              int minVal = INF;
-              int u = -1;
+        for (int count = 0; count < NUM_LOCATIONS - 1; count++) {
+            int minVal = INF;
+            int u = -1;
 
-              for (int i = 0; i < NUM_LOCATIONS; i++) {
-                  if (!visited[i] && d[i] < minVal) {
-                      minVal = d[i];
-                      u = i;
-                  }
-              }
+            for (int i = 0; i < NUM_LOCATIONS; i++) {
+                if (!visited[i] && d[i] < minVal) {
+                    minVal = d[i];
+                    u = i;
+                }
+            }
 
-              if (u == -1) break;
-              visited[u] = true;
+            if (u == -1)
+                break;
 
-              for (int v = 0; v < NUM_LOCATIONS; v++) {
-                  if (!visited[v] && roadMatrix[u][v] != INF && d[u] != INF) {
-                      if (d[u] + roadMatrix[u][v] < d[v]) {
-                          d[v] = d[u] + roadMatrix[u][v];
-                          parent[v] = u;
-                      }
-                  }
-              }
-          }
+            visited[u] = true;
 
-          if (printPath && d[destNode] != INF) {
-              vector<int> path;
-              int curr = destNode;
+            for (int v = 0; v < NUM_LOCATIONS; v++) {
+                if (!visited[v] && roadMatrix[u][v] != INF && d[u] != INF) {
+                    if (d[u] + roadMatrix[u][v] < d[v]) {
+                        d[v] = d[u] + roadMatrix[u][v];
+                        parent[v] = u;
+                    }
+                }
+            }
+        }
 
-              while (curr != -1) {
-                  path.push_back(curr);
-                  curr = parent[curr];
-              }
+        if (printPath && d[destNode] != INF) {
+            vector<int> path;
+            int curr = destNode;
 
-              cout << "Route Traversed: ";
+            while (curr != -1) {
+                path.push_back(curr);
+                curr = parent[curr];
+            }
 
-              for (int i = path.size() - 1; i >= 0; i--) {
-                  cout << locationNames[path[i]];
-                  if (i > 0) cout << " -> ";
-              }
+            cout << "Route Traversed: ";
 
-              cout << endl;
-          }
+            for (int i = path.size() - 1; i >= 0; i--) {
+                cout << locationNames[path[i]];
+                if (i > 0)
+                    cout << " -> ";
+            }
 
-          return d[destNode];
-      }
+            cout << endl;
+        }
+
+        return d[destNode];
+    }
 };
 
-int MAX_BEDS = 4;
+int MAX_BEDS = 100;
 
 class HospitalSystem {
-  private:
-      vector<Patient> admittedPatients;
-      priority_queue<Patient, vector<Patient>, CompareTriagePriority> dispatchQueue;
-      CityMap cityMap;
-      vector<Medicine> pharmacy;
+private:
+    vector<Patient> admittedPatients;
+    priority_queue<Patient, vector<Patient>, CompareTriagePriority> dispatchQueue;
+    CityMap cityMap;
+    vector<Medicine> pharmacy;
 
-  public:
-      HospitalSystem() {
-          pharmacy.push_back(Medicine("Paracetamol", 50, 5.0));
-          pharmacy.push_back(Medicine("Amoxicillin", 30, 15.0));
-          pharmacy.push_back(Medicine("Ibuprofen", 40, 8.0));
-      }
+public:
+    HospitalSystem() {
+        pharmacy.push_back(Medicine("Paracetamol", 50, 5.0));
+        pharmacy.push_back(Medicine("Amoxicillin", 30, 15.0));
+        pharmacy.push_back(Medicine("Ibuprofen", 40, 8.0));
+    }
 
-      bool hasBedAvailable() {
-          return admittedPatients.size() < MAX_BEDS;
-      }
+    bool hasBedAvailable() {
+        return admittedPatients.size() < MAX_BEDS;
+    }
 
-      int getOccupiedCount() {
-          return admittedPatients.size();
-      }
+    int getOccupiedCount() {
+        return admittedPatients.size();
+    }
 
-      bool queueEmergencyCall(int pickupLoc, int id, string name, int priority) {
-          if (pickupLoc < 0 || pickupLoc > 2) {
-              cout << "[ERROR] Invalid pickup location index! Node not found." << endl;
-              return false;
-          }
+    bool queueEmergencyCall(int pickupLoc, int id, string name, int priority) {
+        if (pickupLoc < 0 || pickupLoc > 2) {
+            cout << "[ERROR] Invalid pickup location index! Node not found." << endl;
+            return false;
+        }
 
-          int bedType = (priority == 1) ? 2 : 1;
-          dispatchQueue.push(Patient(id, name, priority, bedType, 0, pickupLoc));
+        int bedType = (priority == 1) ? 2 : 1;
+        dispatchQueue.push(Patient(id, name, priority, bedType, 0, pickupLoc));
 
-          cout << "[TRIAGE QUEUE] Emergency call logged for " << name
-               << " (Severity Rank: " << (priority == 1 ? "1 - Critical" : "2 - Normal") << ")" << endl;
+        cout << "[TRIAGE QUEUE] Emergency call logged for " << name
+             << " (Severity Rank: " << (priority == 1 ? "1 - Critical" : "2 - Normal") << ")" << endl;
 
-          return true;
-      }
+        return true;
+    }
 
-      void processNextDispatch() {
-          if (dispatchQueue.empty()) {
-              cout << "[QUEUE EMPTY] No pending emergency vehicle calls." << endl;
-              return;
-          }
+    void processNextDispatch() {
+        if (dispatchQueue.empty()) {
+            cout << "[QUEUE EMPTY] No pending emergency vehicle calls." << endl;
+            return;
+        }
 
-          if (!hasBedAvailable()) {
-              cout << "[ALERT] All " << MAX_BEDS << " hospital beds are occupied!" << endl;
-              cout << "[ACTION] Emergency vehicle NOT sent. Patient diverted to external facility." << endl;
-              return;
-          }
+        if (!hasBedAvailable()) {
+            cout << "[ALERT] All " << MAX_BEDS << " hospital beds are occupied!" << endl;
+            cout << "[ACTION] Emergency vehicle NOT sent. Patient diverted to external facility." << endl;
+            return;
+        }
 
-          Patient nextPatient = dispatchQueue.top();
-          dispatchQueue.pop();
+        Patient nextPatient = dispatchQueue.top();
+        dispatchQueue.pop();
 
-          cout << endl << "============================================" << endl;
-          cout << "  EMERGENCY VEHICLE DISPATCHED & PATIENT ADMITTED" << endl;
-          cout << "============================================" << endl;
+        cout << endl << "============================================" << endl;
+        cout << "  EMERGENCY VEHICLE DISPATCHED & PATIENT ADMITTED" << endl;
+        cout << "============================================" << endl;
 
-          int travelTime = cityMap.findFastestRoute(nextPatient.getPickupLocation(), 3, true);
-          int fare = travelTime * 50;
-          nextPatient.setAmbulanceFare(fare);
+        int travelTime = cityMap.findFastestRoute(nextPatient.getPickupLocation(), 3, true);
+        int fare = travelTime * 50;
+        nextPatient.setAmbulanceFare(fare);
 
-          admittedPatients.push_back(nextPatient);
+        admittedPatients.push_back(nextPatient);
 
-          cout << "Name : " << nextPatient.getName() << endl;
-          cout << "Patient ID : " << nextPatient.getId() << endl;
-          cout << "Condition Triage : " << (nextPatient.getPriority() == 1 ? "PRIORITY 1 - Critical (Heart Attack)" : "PRIORITY 2 - Normal (Fever)") << endl;
-          cout << "Pickup Point : " << cityMap.getLocationName(nextPatient.getPickupLocation()) << endl;
-          cout << "Estimated Transit : " << travelTime << " minutes" << endl;
-          cout << "Ambulance Fare : Rs. " << fare << endl;
-          cout << "Reserved Bed Slot : Bed " << admittedPatients.size() << " (" << (nextPatient.getBedType() == 1 ? "General Ward" : "ICU") << ")" << endl;
-          cout << "============================================" << endl;
-      }
+        cout << "Name : " << nextPatient.getName() << endl;
+        cout << "Patient ID : " << nextPatient.getId() << endl;
+        cout << "Condition Triage : " << (nextPatient.getPriority() == 1 ? "PRIORITY 1 - Critical (Heart Attack)" : "PRIORITY 2 - Normal (Fever)") << endl;
+        cout << "Pickup Point : " << cityMap.getLocationName(nextPatient.getPickupLocation()) << endl;
+        cout << "Estimated Transit : " << travelTime << " minutes" << endl;
+        cout << "Ambulance Fare : Rs. " << fare << endl;
+        cout << "Reserved Bed Slot : Bed " << admittedPatients.size() << " (" << (nextPatient.getBedType() == 1 ? "General Ward" : "ICU") << ")" << endl;
+        cout << "============================================" << endl;
+    }
 
-      void displayQueueStatus() {
-          cout << endl << "--------------------------------------------" << endl;
-          cout << "  PENDING EMERGENCY CALLS (" << dispatchQueue.size() << " in queue)" << endl;
-          cout << "--------------------------------------------" << endl;
+    void displayQueueStatus() {
+        cout << endl << "--------------------------------------------" << endl;
+        cout << "  PENDING EMERGENCY CALLS (" << dispatchQueue.size() << " in queue)" << endl;
+        cout << "--------------------------------------------" << endl;
 
-          if (dispatchQueue.empty()) {
-              cout << "No pending calls waiting for dispatch." << endl;
-              return;
-          }
+        if (dispatchQueue.empty()) {
+            cout << "No pending calls waiting for dispatch." << endl;
+            return;
+        }
 
-          Patient topPatient = dispatchQueue.top();
+        Patient topPatient = dispatchQueue.top();
 
-          cout << "Next Dispatched Call -> " << topPatient.getName()
-               << " | Priority Rank: " << topPatient.getPriority() << endl;
-          cout << "--------------------------------------------" << endl;
-      }
+        cout << "Next Dispatched Call -> " << topPatient.getName()
+             << " | Priority Rank: " << topPatient.getPriority() << endl;
+        cout << "--------------------------------------------" << endl;
+    }
 
-      void displayBeds() {
-          cout << endl << "--------------------------------------------" << endl;
-          cout << "  HOSPITAL WARD OCCUPANCY (" << admittedPatients.size() << "/" << MAX_BEDS << ")" << endl;
-          cout << "--------------------------------------------" << endl;
+    void displayBeds() {
+        cout << endl << "--------------------------------------------" << endl;
+        cout << "  HOSPITAL WARD OCCUPANCY (" << admittedPatients.size() << "/" << MAX_BEDS << ")" << endl;
+        cout << "--------------------------------------------" << endl;
 
-          if (admittedPatients.empty()) {
-              cout << "All beds are currently vacant." << endl;
-              return;
-          }
+        if (admittedPatients.empty()) {
+            cout << "All beds are currently vacant." << endl;
+            return;
+        }
 
-          for (size_t i = 0; i < admittedPatients.size(); i++) {
-              cout << "Bed " << (i + 1)
-                   << " | ID: " << admittedPatients[i].getId()
-                   << " | Name: " << admittedPatients[i].getName()
-                   << " | Severity: " << (admittedPatients[i].getPriority() == 1 ? "Critical" : "Normal")
-                   << " | Ward: " << (admittedPatients[i].getBedType() == 1 ? "General Ward (Rs. 4000/day)" : "ICU (Rs. 35000/day)")
-                   << " | Inbound Fare: Rs. " << admittedPatients[i].getAmbulanceFare() << endl;
-          }
+        for (size_t i = 0; i < admittedPatients.size(); i++) {
+            cout << "Bed " << (i + 1)
+                 << " | ID: " << admittedPatients[i].getId()
+                 << " | Name: " << admittedPatients[i].getName()
+                 << " | Severity: " << (admittedPatients[i].getPriority() == 1 ? "Critical" : "Normal")
+                 << " | Ward: " << (admittedPatients[i].getBedType() == 1 ? "General Ward (Rs. 4000/day)" : "ICU (Rs. 35000/day)")
+                 << " | Inbound Fare: Rs. " << admittedPatients[i].getAmbulanceFare() << endl;
+        }
 
-          cout << "--------------------------------------------" << endl;
-      }
+        cout << "--------------------------------------------" << endl;
+    }
 
-      void displayPharmacy() {
-          cout << endl << "--------------------------------------------" << endl;
-          cout << "  PHARMACY INVENTORY" << endl;
-          cout << "--------------------------------------------" << endl;
+    void displayPharmacy() {
+        cout << endl << "--------------------------------------------" << endl;
+        cout << "  PHARMACY INVENTORY" << endl;
+        cout << "--------------------------------------------" << endl;
 
-          for (size_t i = 0; i < pharmacy.size(); i++) {
-              cout << (i + 1) << ". " << pharmacy[i].getName()
-                   << " | Stock: " << pharmacy[i].getStock()
-                   << " | Unit Price: Rs. " << pharmacy[i].getPrice() << endl;
-          }
+        for (size_t i = 0; i < pharmacy.size(); i++) {
+            cout << (i + 1) << ". " << pharmacy[i].getName()
+                 << " | Stock: " << pharmacy[i].getStock()
+                 << " | Unit Price: Rs. " << pharmacy[i].getPrice() << endl;
+        }
 
-          cout << "--------------------------------------------" << endl;
-      }
+        cout << "--------------------------------------------" << endl;
+    }
 
-      bool dischargePatient(int patientId, int daysStayed) {
-          int foundIndex = -1;
+    bool dischargePatient(int patientId, int daysStayed) {
+        int foundIndex = -1;
 
-          for (size_t i = 0; i < admittedPatients.size(); i++) {
-              if (admittedPatients[i].getId() == patientId) {
-                  foundIndex = i;
-                  break;
-              }
-          }
+        for (size_t i = 0; i < admittedPatients.size(); i++) {
+            if (admittedPatients[i].getId() == patientId) {
+                foundIndex = i;
+                break;
+            }
+        }
 
-          if (foundIndex == -1) {
-              cout << "[ERROR] Patient ID " << patientId << " not found in active ward records!" << endl;
-              return false;
-          }
+        if (foundIndex == -1) {
+            cout << "[ERROR] Patient ID " << patientId << " not found in active ward records!" << endl;
+            return false;
+        }
 
-          Patient p = admittedPatients[foundIndex];
-          int dailyRate = (p.getBedType() == 1) ? 4000 : 35000;
-          int roomRent = dailyRate * daysStayed;
-          int totalBill = p.getAmbulanceFare() + roomRent;
+        Patient p = admittedPatients[foundIndex];
+        int dailyRate = (p.getBedType() == 1) ? 4000 : 35000;
+        int roomRent = dailyRate * daysStayed;
+        int totalBill = p.getAmbulanceFare() + roomRent;
 
-          cout << endl << "============================================" << endl;
-          cout << "  DISCHARGE & FINAL INVOICE" << endl;
-          cout << "============================================" << endl;
-          cout << "Patient ID       : " << p.getId() << endl;
-          cout << "Patient Name     : " << p.getName() << endl;
-          cout << "Medical Severity : " << (p.getPriority() == 1 ? "Critical (Heart Attack)" : "Normal (Fever)") << endl;
-          cout << "Ward Category    : " << (p.getBedType() == 1 ? "General Ward (Rs. 4000/day)" : "ICU (Rs. 35000/day)") << endl;
-          cout << "Stay Duration    : " << daysStayed << " day(s)" << endl;
-          cout << "--------------------------------------------" << endl;
-          cout << "Ambulance Transit: Rs. " << p.getAmbulanceFare() << endl;
-          cout << "Room Stay Charge : Rs. " << roomRent << endl;
-          cout << "TOTAL PAYABLE    : Rs. " << totalBill << endl;
-          cout << "============================================" << endl;
+        cout << endl << "============================================" << endl;
+        cout << "  DISCHARGE & FINAL INVOICE" << endl;
+        cout << "============================================" << endl;
+        cout << "Patient ID       : " << p.getId() << endl;
+        cout << "Patient Name     : " << p.getName() << endl;
+        cout << "Medical Severity : " << (p.getPriority() == 1 ? "Critical (Heart Attack)" : "Normal (Fever)") << endl;
+        cout << "Ward Category    : " << (p.getBedType() == 1 ? "General Ward (Rs. 4000/day)" : "ICU (Rs. 35000/day)") << endl;
+        cout << "Stay Duration    : " << daysStayed << " day(s)" << endl;
+        cout << "--------------------------------------------" << endl;
+        cout << "Ambulance Transit: Rs. " << p.getAmbulanceFare() << endl;
+        cout << "Room Stay Charge : Rs. " << roomRent << endl;
+        cout << "TOTAL PAYABLE    : Rs. " << totalBill << endl;
+        cout << "============================================" << endl;
 
-          admittedPatients.erase(admittedPatients.begin() + foundIndex);
-          cout << "[SYSTEM] Bed slot deallocated. Record safely cleared." << endl;
+        admittedPatients.erase(admittedPatients.begin() + foundIndex);
+        cout << "[SYSTEM] Bed slot deallocated. Record safely cleared." << endl;
 
-          return true;
-      }
+        return true;
+    }
 };
 
 int main() {
@@ -452,7 +462,8 @@ int main() {
                 cout << "Enter total days of hospital stay: ";
                 cin >> days;
 
-                if (days < 1) days = 1;
+                if (days < 1)
+                    days = 1;
 
                 hospital.dischargePatient(pId, days);
                 break;
