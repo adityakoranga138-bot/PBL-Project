@@ -390,7 +390,12 @@ int main() {
         cout << "7. Exit System" << endl;
         cout << "Enter your choice (1-7): ";
 
-        cin >> choice;
+        if (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "[ERROR] Invalid numeric choice." << endl;
+            continue;
+        }
 
         switch (choice) {
             case 1: {
